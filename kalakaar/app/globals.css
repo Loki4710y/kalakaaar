@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #F5EFE0;
+  --color-surface: #FFFDF7;
+  --color-surface-2: #EDE4CE;
+  --color-primary: #6B1E2E;
+  --color-primary-hover: #8B2A3E;
+  --color-primary-pale: rgba(107, 30, 46, 0.08);
+  --color-primary-border: rgba(107, 30, 46, 0.18);
+  --color-text-primary: #2C1810;
+  --color-text-muted: #7A5C4E;
+  --color-text-hint: #9C7A6A;
+  
+  --font-sans: var(--font-crimson), "Georgia", serif;
+  --font-serif: var(--font-playfair), "Times New Roman", serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+}
+
+
+/* ------------------------------------------------------------------
+   Page transitions. Only transform / opacity / clip-path are animated,
+   so everything runs on the GPU. All of it is switched off for visitors
+   who ask their device for reduced motion.
+   ------------------------------------------------------------------ */
+@keyframes kk-page-enter {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes kk-curtain-cover {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes kk-curtain-reveal {
+  from { clip-path: inset(0 0 0 0); }
+  to   { clip-path: inset(0 0 100% 0); }
+}
+@keyframes kk-curtain-mark {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes kk-curtain-line {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* "backwards" so nothing is left behind after the animation: no stray transform on the page. */
+  .kk-page-enter { animation: kk-page-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+}
+
+.kk-curtain { position: fixed; inset: 0; z-index: 9999; background: #6B1E2E; display: none; pointer-events: none; }
+.kk-curtain[data-state="covering"],
+.kk-curtain[data-state="covered"],
+.kk-curtain[data-state="revealing"] { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.kk-curtain[data-state="covering"]  { pointer-events: all; animation: kk-curtain-cover 480ms cubic-bezier(0.76, 0, 0.24, 1) both; }
+.kk-curtain[data-state="covered"]   { pointer-events: all; clip-path: inset(0 0 0 0); }
+.kk-curtain[data-state="revealing"] { pointer-events: none; animation: kk-curtain-reveal 620ms cubic-bezier(0.76, 0, 0.24, 1) both; }
+.kk-curtain-mark { color: #F5EFE0; font-family: var(--font-playfair), "Times New Roman", serif; font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: 0.02em; animation: kk-curtain-mark 520ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.kk-curtain-line { display: block; height: 1px; width: 7rem; margin-top: 1.1rem; background: #E8C99A; transform-origin: left center; animation: kk-curtain-line 600ms 260ms cubic-bezier(0.22, 1, 0.36, 1) both; }

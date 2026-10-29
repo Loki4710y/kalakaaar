@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#EFE8DA"/>
+  <path d="M50 50H350V250H50V50Z" stroke="#6B1E2E" stroke-width="3" fill="#FFFDF7"/>
+  <circle cx="200" cy="150" r="50" fill="#C8A84B" opacity="0.2"/>
+  <text x="200" y="155" font-family="serif" font-size="16" fill="#6B1E2E" text-anchor="middle">Kalakaar Collection</text>
+</svg>
